@@ -1,4 +1,4 @@
 EV2_CAN
 =======
 
-CANBus for Imperial Racing Green EV2
+CANBus for Imperial Racing Green, EV2
