@@ -47,10 +47,44 @@ void createFrame(CAN_FRAME &frame, int RXID, int length, int REGID, int DATA_1, 
 }
 
 void parseFrame(CAN_FRAME &frame) {
-	switch (frame.id) {
-		case BMS_STATUS:
-			break;
-	}
+    // Motor Controller
+    if (frame.id == NDRIVE_TXID) {
+        switch(frame.data[0]) {
+            // MC Related
+            case SPEED_READ_ADD:
+                int speed = (frame.data[1] << 8) | frame.data[2];
+                break;
+            case CORE_STATUS:
+                int status = (frame.data[1] << 8) | frame.data[2];
+                if (status == KERN_STATUS) {
+                    // DRIVE IS ENABLED
+                    // POSITION CONTROL IS ENABLED
+                    // SPEED CONTROL IS ENABLED
+                } 
+                break;
+        }
+    }
+    else {
+    	switch (frame.data[0]) {
+            // BMS Related
+    		case BMS_STATUS:
+                if (frame.data[1] != 0) {
+                    // ERROR
+                }
+    			break;
+            case PACK_VOLTAGE:
+                break;
+            case PACK_CURRENT:
+                break;
+            case PACK_SOC:
+                break;
+            case PACK_TEMP:
+                if (frame.data[1] > MAX_TEMP) {
+                    // TOO HOT
+                }
+                break;
+    	}
+    }
 }
 
 void abort_requests(int REGID) {

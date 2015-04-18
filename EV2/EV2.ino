@@ -28,8 +28,10 @@ void setup() {
 
 void loop()
 {
-    // 1. parse frame
-    // 2. check if emergency
+    // if something in CAN inbox
+    if (/* condition */) {
+        // parse frame
+    }
 
     //Testing
     testPingPong();
